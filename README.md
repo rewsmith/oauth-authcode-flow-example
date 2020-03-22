@@ -8,7 +8,7 @@ To try this project out:
 1. In your Tyk Gateway, create an API and call it `oauth2`
 2. Set the Access Method to "Oauth 2.0"
 3. Select "Allowed Access Types: Authorization codes"
-4. Select "Allowed Authorize Types: Token"
+4. Select "Allowed Authorize Types: Authorization Code"
 5. Set the login redirect for this API to be: `http://localhost:8000/login`
 6. Take note of the API ID
 7. Add an oauth client to it and set the redirect to be `http://localhost:8000/final`
@@ -25,7 +25,7 @@ Now edit `config.go`:
 1. Set the `APIlistenPath` to `oauth2` (or whatever the listen path is for your OAuth API)
 2. Set `orgID` to be your Org ID (Go to users -> select your user, it is under RPC credentials)
 3. Set `policyID` to be your policy ID
-4. Set `GatewayHost` to be the host path to your gateway e.g. http://domain.com:port (note no trailing slash)
+4. Set `GatewayURL` to be the host path to your gateway e.g. http://domain.com:port (note no trailing slash)
 5. Set `AdminSecret` to your the secret in your `tyk.conf`
 
 Now run the app:

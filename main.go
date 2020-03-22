@@ -14,6 +14,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
 	tmplVal := make(map[string]string)
+
 	tmplVal["ClientID"] = r.FormValue("client_id")
 	tmplVal["ResponseType"] = r.FormValue("response_type")
 	tmplVal["RedirectURI"] = r.FormValue("redirect_uri")
@@ -23,6 +24,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func approvedHandler(w http.ResponseWriter, r *http.Request) {
+	GatewayURL = r.FormValue("gateway_url")
 	var redirect_uri = r.FormValue("redirect_uri")
 	var responseType = r.FormValue("response_type")
 	var clientId = r.FormValue("client_id")

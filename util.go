@@ -119,7 +119,7 @@ func readBody(response *http.Response) ([]byte, error) {
 
 // DispatchGateway will dispatch a request to the gateway API
 func DispatchGateway(target Endpoint, method string, body io.Reader, ctype string) ([]byte, error) {
-	preparedEndpoint := GatewayHost + string(target)
+	preparedEndpoint := GatewayURL + string(target)
 
 	log.Debug("Calling: ", preparedEndpoint)
 	newRequest, err := http.NewRequest(method, preparedEndpoint, body)

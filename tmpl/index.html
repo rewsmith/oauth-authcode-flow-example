@@ -19,9 +19,11 @@
     Click the button below to start the process
   </p>
   <form role="form" method="POST" action="http://localhost:8080/oauth2/oauth/authorize/">
-      <input type="hidden" class="form-control" id="response_type" name="response_type" value="token">
-      <input type="hidden" class="form-control" id="client_id" name="client_id" value="16076d969bc745ec7018dd4343fac83b">
-      <input type="hidden" class="form-control" id="redirect_uri" name="redirect_uri" value="http://localhost:8000/final">
+      <input type="hidden" class="form-control" id="response_type" name="response_type" value="code">
+      <label for="client_id"><b>Client ID</b></label>
+      <input class="form-control" id="client_id" name="client_id" value="220629763ee0484aa1a8f26c86b8a9ff">
+      <label for="redirect_uri"><b>Redirect URI</b></label>
+      <input class="form-control" id="redirect_uri" name="redirect_uri" value="http://localhost:8000/final">
     <button type="submit" class="btn btn-default">Start OAuth</button>
   </form>
 </div>

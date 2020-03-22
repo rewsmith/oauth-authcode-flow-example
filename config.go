@@ -2,9 +2,9 @@ package main
 
 var (
 	APIlistenPath string = "oauth2"
-	orgID         string = "53ac07777cbb8c2d53000002"
-	policyID      string = "56b07cc830c55e6211000003"
-	BaseAPIID     string = "4b3e95c9aad94f646d400a5970e89e0f"
-	GatewayHost   string = "http://change.me.please"
-	AdminSecret   string = "123456789"
+	orgID         string = "5e4123c1e7f07500015bae64"
+	policyID      string = "5e5cd9fc63e37a0001070950"
+	BaseAPIID     string = "9705ca9a25ec467b4343c6795df22c9b"
+	GatewayURL    string = "http://localhost:8080"
+	AdminSecret   string = "352d20ee67be67f6340b4c0605b044b7"
 )
