@@ -15,15 +15,29 @@
   <p>
     The third party requester in this case is an app (mobile or SPWA), that is trying to get an access token. The requester kicks off the OAuth process by posting it's authorize request to the Tyk endpoint on your gateway.
   </p>
+    <p>
+        The OAuth flow is making use of the following environment variables:
+    </p>
+    <ul>
+        <li>API Listen Path: {{.APIlistenPath}}</li>
+        <li>Org ID: {{.OrgID}}</li>
+        <li>Policy ID: {{.PolicyID}}</li>
+        <li>API ID: {{.BaseAPIID}}</li>
+        <li>Gateway URL: {{.GatewayURL}}</li>
+        <li>Admin Secret: {{.AdminSecret}}</li>
+        <li>Client ID: {{.ClientID}}</li>
+        <li>Redirect URL: {{.RedirectURI}}</li>
+        <li>Response Type: {{.ResponseType}}</li>
+    </ul>
   <p>
     Click the button below to start the process
   </p>
   <form role="form" method="POST" action="http://localhost:8080/oauth2/oauth/authorize/">
       <input type="hidden" class="form-control" id="response_type" name="response_type" value="code">
       <label for="client_id"><b>Client ID</b></label>
-      <input class="form-control" id="client_id" name="client_id" value="220629763ee0484aa1a8f26c86b8a9ff">
+      <input class="form-control" id="client_id" name="client_id" value="{{.ClientID}}">
       <label for="redirect_uri"><b>Redirect URI</b></label>
-      <input class="form-control" id="redirect_uri" name="redirect_uri" value="http://localhost:8000/final">
+      <input class="form-control" id="redirect_uri" name="redirect_uri" value="{{.RedirectURI}}">
     <button type="submit" class="btn btn-default">Start OAuth</button>
   </form>
 </div>

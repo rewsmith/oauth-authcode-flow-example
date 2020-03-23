@@ -2,14 +2,42 @@ package main
 
 import (
 	log "github.com/Sirupsen/logrus"
+	"github.com/joho/godotenv"
 	"html/template"
 	"net/http"
+	"os"
+)
+
+var (
+	APIlistenPath string = ""
+	OrgID         string = ""
+	PolicyID      string = ""
+	BaseAPIID     string = ""
+	GatewayURL    string = ""
+	AdminSecret   string = ""
+	ClientID      string = ""
+	RedirectURI   string = ""
 )
 
 func index(w http.ResponseWriter, r *http.Request) {
-	if r.Method != "POST" {
+	/*if r.Method != "POST" {
 		http.ServeFile(w, r, "tmpl/index.html")
-	}
+	}*/
+
+	tmplVal := make(map[string]string)
+
+	tmplVal["APIlistenPath"] = APIlistenPath
+	tmplVal["OrgID"] = OrgID
+	tmplVal["PolicyID"] = PolicyID
+	tmplVal["BaseAPIID"] = BaseAPIID
+	tmplVal["GatewayURL"] = GatewayURL
+	tmplVal["AdminSecret"] = AdminSecret
+	tmplVal["ClientID"] = ClientID
+	tmplVal["ResponseType"] = "code"
+	tmplVal["RedirectURI"] = RedirectURI
+
+	t, _ := template.ParseFiles("tmpl/index.html")
+	t.Execute(w, tmplVal)
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,13 +52,12 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func approvedHandler(w http.ResponseWriter, r *http.Request) {
-	GatewayURL = r.FormValue("gateway_url")
 	var redirect_uri = r.FormValue("redirect_uri")
 	var responseType = r.FormValue("response_type")
 	var clientId = r.FormValue("client_id")
 
 	thisResponse, rErr := RequestOAuthToken(APIlistenPath,
-		redirect_uri, responseType, clientId, "", orgID, policyID, BaseAPIID)
+		redirect_uri, responseType, clientId, "", OrgID, PolicyID, BaseAPIID)
 
 	if rErr != nil {
 		log.Error(rErr)
@@ -41,6 +68,30 @@ func approvedHandler(w http.ResponseWriter, r *http.Request) {
 
 func finalHandler(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "tmpl/final.html")
+}
+
+// init is invoked before main()
+func init() {
+	// loads values from .env into the system
+	if err := godotenv.Load(".env"); err != nil {
+		log.Print("No .env file found")
+	}
+
+	APIlistenPath = getEnv("API_LISTENPATH", "oauth2")
+	OrgID = getEnv("ORG_ID", "")
+	PolicyID = getEnv("POLICY_ID", "")
+	BaseAPIID = getEnv("API_ID", "")
+	GatewayURL = getEnv("GATEWAY_URL", "")
+	AdminSecret = getEnv("ADMIN_SECRET", "")
+	ClientID = getEnv("CLIENT_ID", "")
+	RedirectURI = getEnv("REDIRECT_URI", "")
+}
+
+func getEnv(key string, defaultVal string) string {
+	if value, exists := os.LookupEnv(key); exists {
+		return value
+	}
+	return defaultVal
 }
 
 func main() {

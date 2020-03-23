@@ -3,6 +3,7 @@ RUN mkdir /app
 ADD . /app
 RUN apk add --no-cache git \
     && go get github.com/Sirupsen/logrus \
+    && go get github.com/joho/godotenv \
     && apk del git
 WORKDIR /app
 # Our project will now successfully build with the necessary go libraries included.
